@@ -1,0 +1,20 @@
+
+%LAoptimo=on
+%Gtarget=120
+
+Escenario 1
+
+%Tmeals=[13 21] 
+%Ameals= [40 60]
+%QTmeals=hour
+Dmeals= [15]
+
+%Tcomix=[7]
+%comix=[28]
+
+basal=1
+
+endoglucagon = 1
+BGini=250
+
+
