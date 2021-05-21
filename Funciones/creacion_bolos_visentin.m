@@ -1,3 +1,24 @@
+%=======================================================================
+% **creacion_bolos_visentin**
+%
+%   @Description:
+%               Funcion encargada de generar vector de insulina basado en
+%               en el modelo de Visentin.
+%               Este modelo permite tener en cuenta una variacion mas 
+%               realista y versatil, se considero la variabilidad diurna 
+%               de los parametros del sistema que describe la sensibilidad 
+%               a la insulina.
+%               
+%
+%   @param:     -parametros:            struct(string,array)
+%               -escenario:             struct(string,array)
+%               -t:                     array(number)
+%               -sujeto:                struct(string,array)
+%               -mix:                   boolean
+%
+%   @return:    -parametros:            struct(string,array)
+%               -escenario:             struct(string,array) 
+%=======================================================================
 function [parametros,escenario] = creacion_bolos_visentin(parametros,escenario,t,sujeto,mix)
 
 SI_profile = ones(1,length(t));

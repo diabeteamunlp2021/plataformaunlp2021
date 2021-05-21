@@ -1,6 +1,18 @@
 %=======================================================================
-% Modelo presentado en Visentin et al. 2018
-% versión Marzo 2018
+% **t1dm_unlp**
+%   @Description:
+%
+%   @param:     -t:             number
+%               -x:             number
+%               -u:             number
+%               -flag:          number
+%               -parametros:
+%               -escenario:
+%
+%   @return:    -sys:           functions
+%               -x0:
+%               -str:
+%               -ts:
 %=======================================================================
 
 function [sys,x0,str,ts] = t1dm_unlp(t,x,u,flag,parametros,escenario)

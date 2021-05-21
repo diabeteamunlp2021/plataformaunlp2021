@@ -1,3 +1,19 @@
+%=======================================================================
+%   **creacion_bolos**
+%   
+%   @Description:
+%               Funcion encargada de crear los bolos de insulina necesario 
+%               durante un periodo establecido de simulacion.
+%
+%   @param:     -parametros:            struct(string,array)
+%               -escenario:             struct(string,array)
+%               -t:                     array(number)
+%               -sujeto:                struct(string,array)
+%               -mix:                   boolean(comidas mixtas)
+%
+%   @return:    -insulina:              array
+%               -escenario:             struct(string,array) 
+%=======================================================================
 function [insulina,escenario] = creacion_bolos(parametros,escenario,t,sujeto,mix)
 
 insulina    = zeros(2,size(t,2));

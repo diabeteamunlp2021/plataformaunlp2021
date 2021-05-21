@@ -1,3 +1,15 @@
+%=======================================================================
+% **excel_maker**
+%
+%   @Description:
+%               Funcion encargada de generar un archivo con extencion .xsl
+%               (excel)con los datos de salida.
+%               
+%
+%   @param:     -archivo:            filename
+%
+%   @return:    none
+%=======================================================================
 function [] = excel_maker(archivo)
 load(archivo);
 n=length(resultados);

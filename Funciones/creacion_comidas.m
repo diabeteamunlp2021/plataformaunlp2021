@@ -1,4 +1,14 @@
-%Creación del vector comidas
+%=======================================================================
+% **creacion_comidas**
+%
+%   @Description:
+%               Funcion encarga de generar vector de comidas.
+%
+%   @param:     -escneario:          struct(string,array)
+%               -t:                  array(time)
+%
+%   @return:    -comidas:            array
+%=======================================================================
 
 function [comidas] = creacion_comidas(escenario,t)
 

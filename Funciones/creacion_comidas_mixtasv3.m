@@ -1,4 +1,19 @@
-
+%=======================================================================
+% **creacion_comidas_mixtasv3**
+%
+%   @Description:
+%               Funcion encarga de generar vector de comidas mixtas con
+%               la capacidad de generar el momento del dia en que se aplica 
+%               y la cantidad de calorias en un momento dado.
+%
+%   @param:     -escneario:          struct(string,array)
+%               -t:                  array(time)
+%               -sujeto:             struct(string,array)
+%
+%   @return:    -comidas_mixtas:     array
+%               -Tcomix:             array(time)
+%               -Acomix:             array(calorias)
+%=======================================================================
 function [comidas_mixtas,Tcomix,Acomix] = creacion_comidas_mixtasv3(escenario,t,sujeto)
 
 load('RaPoint')

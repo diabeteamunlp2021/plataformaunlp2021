@@ -1,5 +1,15 @@
-%Creación de los venctores de insulina y dextrosa intravenosa
-
+%=======================================================================
+% **creacion_IV**
+%
+%   @Description:
+%               Funcion encarga de generar vectores de insulina y dextrosa
+%               intravenosa.
+%
+%   @param:     -escneario:          struct(string,array)
+%               -t:                  array(time)
+%
+%   @return:    -iv:                 array
+%=======================================================================
 function [iv] = creacion_IV(escenario,t)
 
 iv = zeros(2,size(t,2));

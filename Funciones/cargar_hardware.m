@@ -1,3 +1,18 @@
+%=======================================================================
+% **carga_hardware**
+%
+%   @Description:
+%               Funcion encarga de generar una structura de datos que
+%               representa el hardware a implementar en la simulacion.
+%
+%   @param:     -nombre_bomba:          string
+%               -nombre_sensor:         string
+%               -hardware:              struct(string,number)
+%               -bomba:
+%               -sensor:
+%
+%   @return:    -hardware:            	struct(string,number)
+%=======================================================================
 function hardware = cargar_hardware(nombre_bomba,nombre_sensor,hardware,bomba,sensor)
 if bomba
     content = textread(['Hardware\' nombre_bomba],'%s','delimiter','\n');

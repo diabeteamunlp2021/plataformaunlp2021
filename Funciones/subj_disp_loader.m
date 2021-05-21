@@ -1,3 +1,18 @@
+%=======================================================================
+% **subj_disp_loader**
+%
+%   @Description:
+%               Funcion encargade de generar arrays con los sujetos, bombas
+%               y sensores disponibles. Obteniendolo de sus respectivos
+%               archivos
+%
+%   @param:     none
+%
+%   @return:    -sujetos:   list(string)
+%               -bombas:    array(bombas)
+%               -sensores:  array(sensores)
+%               -v:         number
+%=======================================================================
 function [sujetos, bombas, sensores, v] = subj_disp_loader()
 
 sujeto = what('Pacientes'); %lista de archivos MATLAB segun tipo dentro de la carpeta

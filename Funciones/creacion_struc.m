@@ -1,3 +1,18 @@
+%=======================================================================
+% **creacion_struc**
+%
+%   @Description:
+%               Funcion encarga de crear multiples estructuras de salida
+%               (datos, hardware, escenario, parametros y control).
+%
+%   @param:     -n:             number (length)
+%
+%   @return:    -data:          struct(string,array)
+%               -parametros:    struct(string,array)
+%               -escenario:     struct(string,array)
+%               -ctrl:          struct(string,array)
+%               -hardware:      struct(string,number)
+%=======================================================================
 function [data,parametros,escenario,ctrl,hardware] = creacion_struc(n)
 
 data(n)          = struct('glucosa',[],'t',[],'salidas',[],'estados',[],'parametros',[],'ctrl',[],'escenario',[]); 

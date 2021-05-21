@@ -1,3 +1,16 @@
+%=======================================================================
+%   **cargar_sujeto**
+%   
+%   @Description:
+%               Funcion encargada de devolver una estructura con los 
+%               parametros de los sujetos de prueba.
+%
+%   @param:     -sujeto:        struct(string,array)
+%               -parametros:    struct(string,array)
+%               
+%   
+%   @return:    -parametros:    struct(string,array)
+%=======================================================================
 function [parametros] = cargar_sujeto(sujeto,parametros)
 
 load(sujeto)

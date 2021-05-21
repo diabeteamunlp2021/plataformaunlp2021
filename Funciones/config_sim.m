@@ -1,3 +1,14 @@
+%=======================================================================
+%   **config_sim**
+%   
+%   @Description:
+%               Funcion encargada de configurar parametros de la simulacion
+%               en Simulink
+%
+%   @param:     none
+%   
+%   @return:     struct(configuracion de Simulink)
+%=======================================================================
 function [parametros_simu] = config_sim()
 
 %Configuración de la simulación de simulink

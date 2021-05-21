@@ -1,3 +1,4 @@
+%Es necesario setear el archivo que normalmente es el sim.ma en sim_data
 function [] = graficos(archivo)
 
 addpath(genpath(cd))

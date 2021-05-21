@@ -1,3 +1,18 @@
+%=======================================================================
+%   **condiciones_iniciales**
+%   
+%   @Description:
+%               Funcion encargada de generar las condiciones iniciales de
+%               T1DM, basandose en los niveles de glucosa.
+%               Si se especifica puede ser tanto modelo varsen como
+%               visentin, sino se establecera un valor inicial por defecto
+%               con el valor en ayuna de cada sujeto.
+%
+%   @param:     -parametros:          struct(string,array)
+%               -escenario:           struct(string,array)
+%   
+%   @return:    -x0:                  array
+%=======================================================================
 function [x0] = condiciones_iniciales(parametros,escenario)
 
 %Se recalculan las condiciones iniciales si se cambio los niveles de glucosa en plasma iniciales
@@ -11,7 +26,8 @@ if parametros.variacion.varsen||parametros.variacion.visentin
     parametros.paciente.kmin = parametros.paciente.kmin(floor(escenario.ti/escenario.paso+1));
     parametros.paciente.kabs = parametros.paciente.kabs(floor(escenario.ti/escenario.paso+1));
 end
-    
+
+%Si no es especificado BGini, la simulacion empieza con el valor de ayuno de cada sujeto
 if ~isempty(escenario.BGini)    
         if escenario.BGini<parametros.paciente.Gb && escenario.BGini>parametros.paciente.Gth
             fGp  = log(escenario.BGini/parametros.paciente.Gb)^parametros.paciente.r2;

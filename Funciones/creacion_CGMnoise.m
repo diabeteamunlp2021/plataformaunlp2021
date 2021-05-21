@@ -1,3 +1,17 @@
+%=======================================================================
+% **creacion_CGMnoise**
+%
+%   @Description:
+%               Funcion encarga de simular el funcionamiento del sensor CGM
+%               aplicando el ruido que este puede llegar a generar en las
+%               mediciones para darle un toque mas realista en las lecturs.
+%
+%   @param:     -hardware:          struct(string,array)
+%               -escenario:         struct(string,array)
+%               -t:                 number
+%
+%   @return:    -ruido:             array
+%=======================================================================
 function [ruido] = creacion_CGMnoise(hardware,escenario,t)
 
 ruido = [t' zeros(size((t)'))];

@@ -1,4 +1,33 @@
+%=======================================================================
+%   **variacion_intrapaciente_v3**
+%   
+%   @Description:
+%               Funcion encargada de generar una variacion senoidal para 
+%               asi obtener una simulacion mas realista de las variaciones
+%               de los parmetros de los pacientes.
+%
+%               Modelo: p(t)=p0 +p0 *K(t) sin [(2PI/(P*60))+2PI*F]
+%
+%               -p(t):          Parametro a variar en el tiempo
+%
+%               -p0:            Valor inicial/por defecto del parametro
+%               -K(t):          Amplitud que puede variar o no en el tiempo
+%                               dependiendo de p0
+%               -P:             Periodo de la variacion (24hrs)
+%               -F:             Ajuste de fase
+%
+%   @param:     -parametros:    struct(string,array)
+%               -t:             array(number)
+%               -paso:          number(paso de simulacion)
+%               
+%   
+%   @return:    -parametros:    struct(string,array)
+%=======================================================================
+%%
 function[parametros] = variacion_intrapaciente_v3(parametros,t,paso)
+
+%En base a la interfaz grafica que se muestra al inicio de simulacion la
+%cual permite seleccionar o variacion varsen o visentin
 
 if parametros.variacion.varsen
     parametros.paciente.Vmx  = parametros.paciente.Vmx*(1+parametros.variacion.ampvmx/100*sin(2*pi/parametros.variacion.periodovmx/60*(t+parametros.variacion.fasevmx*60)));
