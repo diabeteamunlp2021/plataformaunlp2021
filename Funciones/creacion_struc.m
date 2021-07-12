@@ -1,8 +1,8 @@
 %=======================================================================
-% **creacion_struc**
+%   creacion_struc
 %
 %   @Description:
-%               Funcion encarga de crear multiples estructuras de salida
+%               Funcion encargada de crear multiples estructuras de salida
 %               (datos, hardware, escenario, parametros y control).
 %
 %   @param:     -n:             number (length)

@@ -1,5 +1,5 @@
 %=======================================================================
-%   **variacion_intrapaciente_v3**
+%   variacion_intrapaciente_v3
 %   
 %   @Description:
 %               Funcion encargada de generar una variacion senoidal para 

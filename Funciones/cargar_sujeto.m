@@ -1,5 +1,5 @@
 %=======================================================================
-%   **cargar_sujeto**
+%   cargar_sujeto
 %   
 %   @Description:
 %               Funcion encargada de devolver una estructura con los 

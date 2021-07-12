@@ -1,8 +1,8 @@
 %=======================================================================
-% **creacion_IV**
+%   creacion_IV
 %
 %   @Description:
-%               Funcion encarga de generar vectores de insulina y dextrosa
+%               Funcion encargada de generar vectores de insulina y dextrosa
 %               intravenosa.
 %
 %   @param:     -escneario:          struct(string,array)

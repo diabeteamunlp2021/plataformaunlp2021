@@ -1,5 +1,5 @@
 %=======================================================================
-% **creacion_CGMnoise**
+%   creacion_CGMnoise
 %
 %   @Description:
 %               Funcion encarga de simular el funcionamiento del sensor CGM

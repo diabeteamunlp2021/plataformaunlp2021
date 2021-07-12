@@ -1,5 +1,5 @@
 %=======================================================================
-%   **guardar**
+%   guardar
 %   
 %   @Description:
 %               Funcion encargada de generar un archivo con los datos de 

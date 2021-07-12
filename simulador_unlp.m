@@ -1,5 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Inicialización
+%% ------- Inicialización
 clear global
 clear
 clc
@@ -8,11 +7,11 @@ cd(dir)
 addpath(genpath(cd))
 
 global ctrl
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Plataforma de simulación  
+
+%% ------- Plataforma de simulación 
 plataforma = 'plataforma_unlp';
  
-auto = 0;
+auto = 0; % para usar interfaz grafica o no
 switch auto    
 case 1
     % Configuración de simulación
@@ -47,7 +46,7 @@ case 0
         return;
     end    
 
-    %Ventana de carga de datos
+    %% ---- Ventana de carga de datos
     [settings, boton] = settingsdlg(...                                                 %esta función fue desarrollada por Rody Oldenhuis
         'Description', 'Configuración de diferentes aspectos de la simulación',...
         'title'      , 'Simulador UNLP',...
@@ -56,7 +55,7 @@ case 0
         {'Paso de simulación (en minutos)';'paso'},1,...
         {'Inicio (hs a partir 00hs)';'ti'},6,...
         {'Fin de la simulación (hs a partir 00hs)';'tf'},24,...
-        'separator'  , 'Modelo sensor',...
+        'separator'  , 'Modelo sensor',...parametros.ruido
         {'Modelo sensor';'sensor'},[false, true],...
         {'Sensores disponibles';'nombresensor'},{sensores},...
         {'Ruido';'ruido'},false,...
@@ -86,8 +85,7 @@ end
 %Creación de las estructuras de salida  
 [data,parametros,escenario,ctrl,hardware] = creacion_struc(length(sujeto));
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Ventana de variación intra-paciente senoidal
+%% ------- Ventana de variación intra-paciente senoidal
 if settings.varsen
    [parametros.variacion,boton] = settingsdlg(...                   
     'separator' ,'Variacion senoidal',...    
@@ -151,8 +149,7 @@ parametros.iv = creacion_IV(escenario,t);
 %Carga del hardware
 hardware = cargar_hardware(escenario.nombre_bomba,escenario.nombre_sensor,hardware,settings.bomba,settings.sensor); 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Configuración SIMULINK y ventana de progreso
+%% ------ Configuración SIMULINK y ventana de progreso
 paramNameValStruct = config_sim();
 h = waitbar(0,'Simulando pacientes, por favor espere...','windowstyle', 'modal');
 
@@ -195,11 +192,12 @@ for v=1:length(sujeto)
     end
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %Simulación
+    %Simulación REEMPLAZAR
     cd Plataformas\
     simOut = sim(plataforma,paramNameValStruct);
     cd ..
-    
+     
+      
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %Guardado de variables de salida de la simulación
     salidas = simOut.get('salidas');
@@ -217,8 +215,8 @@ end
 disp(['**Guardado "',settings.narchi,'"**'])
 disp('**Simulación finalizada**')
 disp(datetime('now'))
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Gráficos y planilla de resultados
+
+%% --------- Gráficos y planilla de resultados
 if auto == 0
     graficos(settings.narchi);
 end

@@ -1,20 +1,19 @@
 %=======================================================================
-% **cargar_escenario**
+% cargar_escenario
 %
 %   @Description:
-%               Funcion encarga de interpretar lineas de texto del archivo
+%               Funcion encargada de interpretar lineas de texto del archivo
 %               dentro de la carpeta "/Escenarios", las cuales son
 %               configuraciones necesarias para la simulacion.
 %               Configuracion del Escenario.
 %
-%   @param:     -escneario:          struct(string,array)
+%   @param:     -escenario:          struct(string,array)
 %
 %   @return:    -escenario:          struct(string,array)
 %=======================================================================
 function [escenario] = cargar_escenario(escenario)
 
 %default values
-%
 Gtarget      = [];
 LAoptimo     = [];
 sensibilidad = [];

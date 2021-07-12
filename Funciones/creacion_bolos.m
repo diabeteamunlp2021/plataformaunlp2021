@@ -1,5 +1,5 @@
 %=======================================================================
-%   **creacion_bolos**
+%   creacion_bolos
 %   
 %   @Description:
 %               Funcion encargada de crear los bolos de insulina necesario 

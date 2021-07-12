@@ -1,5 +1,5 @@
 %=======================================================================
-%   **condiciones_iniciales**
+%   condiciones_iniciales
 %   
 %   @Description:
 %               Funcion encargada de generar las condiciones iniciales de

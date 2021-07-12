@@ -1,8 +1,8 @@
 %=======================================================================
-% **creacion_comidas_mixtasv3**
+%   creacion_comidas_mixtasv3
 %
 %   @Description:
-%               Funcion encarga de generar vector de comidas mixtas con
+%               Funcion encargada de generar vector de comidas mixtas con
 %               la capacidad de generar el momento del dia en que se aplica 
 %               y la cantidad de calorias en un momento dado.
 %

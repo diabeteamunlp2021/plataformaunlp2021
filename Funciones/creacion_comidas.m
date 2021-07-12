@@ -1,5 +1,5 @@
 %=======================================================================
-% **creacion_comidas**
+%   creacion_comidas
 %
 %   @Description:
 %               Funcion encarga de generar vector de comidas.

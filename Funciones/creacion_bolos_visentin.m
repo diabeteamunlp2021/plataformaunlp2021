@@ -1,5 +1,5 @@
 %=======================================================================
-% **creacion_bolos_visentin**
+%   creacion_bolos_visentin
 %
 %   @Description:
 %               Funcion encargada de generar vector de insulina basado en

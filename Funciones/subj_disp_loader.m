@@ -1,8 +1,8 @@
 %=======================================================================
-% **subj_disp_loader**
+%   subj_disp_loader
 %
 %   @Description:
-%               Funcion encargade de generar arrays con los sujetos, bombas
+%               Funcion encargada de generar arrays con los sujetos, bombas
 %               y sensores disponibles. Obteniendolo de sus respectivos
 %               archivos
 %

@@ -1,5 +1,5 @@
 %=======================================================================
-%   **config_sim**
+%   config_sim
 %   
 %   @Description:
 %               Funcion encargada de configurar parametros de la simulacion
@@ -17,12 +17,12 @@ parametros_simu.SaveState      = 'on';
 parametros_simu.StateSaveName  = 'estados';
 parametros_simu.SaveOutput     = 'on';
 parametros_simu.OutputSaveName = 'salidas';
-parametros_simu.StartTime      = 'escenario.ti';
+parametros_simu.StartTime      = 'escenario.ti'; %Specify the start time for the simulation or generated code as a double-precision value, scaled to seconds.
 parametros_simu.StopTime       = 'escenario.tf';
 parametros_simu.SaveTime       = 'on';
 parametros_simu.TimeSaveName   = 'tout';
 parametros_simu.SolverType     = 'Fixed-step';
-parametros_simu.Solver         = 'ode1';
+parametros_simu.Solver         = 'ode1';    %Select the solver you want to use to compute the states of the model during simulation or code generation.
 parametros_simu.Fixedstep      = 'escenario.paso';
 parametros_simu.LimitDataPoints = 'off';
 
