@@ -23,7 +23,7 @@ function [parametros,escenario] = creacion_bolos_visentin(parametros,escenario,t
 
 SI_profile = ones(1,length(t));
 
-%Asignación aletaoria de clase   
+%Asignación aleatoria de clase   
 %r tiene una distribución uniforme continua entre 0 y 1  
 %a partir de la misma creo mi distribución de clases
 
