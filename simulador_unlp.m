@@ -1,4 +1,4 @@
-%% ------- Inicialización
+%% ------- Inicializacion
 clear global
 clear
 clc
@@ -8,13 +8,13 @@ addpath(genpath(cd))
 
 global ctrl
 
-%% ------- Plataforma de simulación 
+%% ------- Plataforma de simulacion 
 plataforma = 'plataforma_unlp';
  
 auto = 0; % para usar interfaz grafica o no
 switch auto    
 case 1
-    % Configuración de simulación
+    % Configuracion de simulacion
     settings = struct(...                                                
         'escenario',{'prueba'},...
         'paso',1,'ti',0,'tf',30,...
@@ -41,20 +41,20 @@ case 1
 case 0        
     %Carga de los sujetos a simular
     [sujeto, bombas, sensores, s] = subj_disp_loader();    %arrelgo de cadenas que contienem los sujetosy dispositivos disponibles
-    if s==0                     %en caso de cancelar la selección se cierra el programa
+    if s==0                     %en caso de cancelar la selecciï¿½n se cierra el programa
         clear
         return;
     end    
 
     %% ---- Ventana de carga de datos
-    [settings, boton] = settingsdlg(...                                                 %esta función fue desarrollada por Rody Oldenhuis
-        'Description', 'Configuración de diferentes aspectos de la simulación',...
+    [settings, boton] = settingsdlg(...                                                 %esta funciï¿½n fue desarrollada por Rody Oldenhuis
+        'Description', 'Configuraciï¿½n de diferentes aspectos de la simulaciï¿½n',...
         'title'      , 'Simulador UNLP',...
-        'separator'  , 'Configuración',...
+        'separator'  , 'Configuraciï¿½n',...
         {'Nombre escenario';'escenario'},'prueba',...
-        {'Paso de simulación (en minutos)';'paso'},1,...
+        {'Paso de simulaciï¿½n (en minutos)';'paso'},1,...
         {'Inicio (hs a partir 00hs)';'ti'},6,...
-        {'Fin de la simulación (hs a partir 00hs)';'tf'},24,...
+        {'Fin de la simulaciï¿½n (hs a partir 00hs)';'tf'},24,...
         'separator'  , 'Modelo sensor',...parametros.ruido
         {'Modelo sensor';'sensor'},[false, true],...
         {'Sensores disponibles';'nombresensor'},{sensores},...
@@ -62,19 +62,19 @@ case 0
         'separator'  , 'Modelo bomba',...
         {'Modelo bomba';'bomba'},[false, true],...
         {'Bombas disponibles';'nombrebomba'},{bombas},...
-        'separator'  , 'Variación intra-paciente',...    
-        {'Variación Herrero 2012','varsen'},false,... 
-        {'Variación Visentin 2015','visentin'},false,...
+        'separator'  , 'Variaciï¿½n intra-paciente',...    
+        {'Variaciï¿½n Herrero 2012','varsen'},false,... 
+        {'Variaciï¿½n Visentin 2015','visentin'},false,...
         'separator'  , 'Comidas mixtas',...
         {'Agregar comidas mixtas';'mix'},false,...
         'separator'  , 'Rango de normoglucemia',...
-        {'Límite de hipoglucemia (mg/dl)';'rango1'},70,...
-        {'Límite de hiperglucemia (mg/dl)';'rango2'},180,...
+        {'Lï¿½mite de hipoglucemia (mg/dl)';'rango1'},70,...
+        {'Lï¿½mite de hiperglucemia (mg/dl)';'rango2'},180,...
         'separator'  ,'Tipo de tratamiento',...
-        {'Tratamiento';'lazo'},{'Lazo abierto','Lazo cerrado','Lazo híbrido'},...
+        {'Tratamiento';'lazo'},{'Lazo abierto','Lazo cerrado','Lazo hï¿½brido'},...
         'separator' ,'Archivos de salida',...
         {'Nombre del archivo de guardado';'narchi'},'sim',...
-        {'¿Archivo Excel?';'excel'},false);
+        {'ï¿½Archivo Excel?';'excel'},false);
 
     if ~strcmp(boton,'OK')              %en caso de cancelar se sale del programa
         clear
@@ -82,22 +82,22 @@ case 0
     end
 end 
 
-%Creación de las estructuras de salida  
+%Creacion de las estructuras de salida  
 [data,parametros,escenario,ctrl,hardware] = creacion_struc(length(sujeto));
 
-%% ------- Ventana de variación intra-paciente senoidal
+%% ------- Ventana de variaciï¿½n intra-paciente senoidal
 if settings.varsen
    [parametros.variacion,boton] = settingsdlg(...                   
     'separator' ,'Variacion senoidal',...    
     {'Sens. ins.: Periodo (hs)';'periodovmx'},24,...
     {'Sens. ins.: Amplitud (%)';'ampvmx'},0,...
     {'Sens. ins.: Fase (hs)';'fasevmx'},0,...
-    {'Sens. ins. hepática: Periodo (hs)';'periodokp3'},24,...
-    {'Sens. ins. hepática: Amplitud (%)';'ampkp3'},0,...
-    {'Sens. ins. hepática: Fase (hs)';'fasekp3'},0,...
-    {'Dinámica ins. sc.: Periodo (hs)';'periodoisc'},24,...
-    {'Dinámica ins. sc: Amplitud (%)';'ampisc'},0,...
-    {'Dinámica ins. sc: Fase (hs)';'faseisc'},0);
+    {'Sens. ins. hepï¿½tica: Periodo (hs)';'periodokp3'},24,...
+    {'Sens. ins. hepï¿½tica: Amplitud (%)';'ampkp3'},0,...
+    {'Sens. ins. hepï¿½tica: Fase (hs)';'fasekp3'},0,...
+    {'Dinï¿½mica ins. sc.: Periodo (hs)';'periodoisc'},24,...
+    {'Dinï¿½mica ins. sc: Amplitud (%)';'ampisc'},0,...
+    {'Dinï¿½mica ins. sc: Fase (hs)';'faseisc'},0);
     if ~strcmp(boton,'OK')
         settings.varsen = 0;
     end
@@ -112,10 +112,10 @@ escenario.nombre = [char(settings.escenario) '.scn'];       %nombre del escenari
     clear
     return;
 end
-escenario.ti                = settings.ti*60;             %tiempo de inicio de la simulación en minutos a partir de las 0hs
-escenario.tf                = settings.tf*60;             %duración de la simulación
-escenario.paso              = settings.paso;              %paso de simulación en minutos
-t                           = linspace(0,escenario.tf,escenario.tf/escenario.paso+1);  %creación del vector de tiempo de simulación  
+escenario.ti                = settings.ti*60;             %tiempo de inicio de la simulaciï¿½n en minutos a partir de las 0hs
+escenario.tf                = settings.tf*60;             %duraciï¿½n de la simulaciï¿½n
+escenario.paso              = settings.paso;              %paso de simulaciï¿½n en minutos
+t                           = linspace(0,escenario.tf,escenario.tf/escenario.paso+1);  %creaciï¿½n del vector de tiempo de simulaciï¿½n  
 escenario.nombre_bomba      = char(settings.nombrebomba);           %bomba seleccionada
 escenario.nombre_sensor     = char(settings.nombresensor);          %sensor seleccionada
 
@@ -127,53 +127,53 @@ switch settings.lazo
         lazo=1;lazoh=-1;
     case 'Lazo cerrado'
         lazo=-1;lazoh=-1;
-    case 'Lazo híbrido'
+    case 'Lazo hï¿½brido'
         lazo=1;lazoh=1;
 end
 
-%Parametros generales de simulación
-disp('**Cargando parámetros**')
+%Parametros generales de simulaciï¿½n
+disp('**Cargando parï¿½metros**')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Carga del escenario
 [escenario] = cargar_escenario(escenario);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Creación del vector de comidas
+%Creaciï¿½n del vector de comidas
 parametros.comidas = creacion_comidas(escenario,t);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Creación del vector de suministros intravenosos
+%Creaciï¿½n del vector de suministros intravenosos
 parametros.iv = creacion_IV(escenario,t);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Carga del hardware
 hardware = cargar_hardware(escenario.nombre_bomba,escenario.nombre_sensor,hardware,settings.bomba,settings.sensor); 
 
-%% ------ Configuración SIMULINK y ventana de progreso
+%% ------ Configuraciï¿½n SIMULINK y ventana de progreso
 paramNameValStruct = config_sim();
 h = waitbar(0,'Simulando pacientes, por favor espere...','windowstyle', 'modal');
 
-%Bucle principal de simulación
+%Bucle principal de simulaciï¿½n
 for v=1:length(sujeto)
     
-    %Carga de parámetros de sujeto
+    %Carga de parï¿½metros de sujeto
     parametros = cargar_sujeto(char(sujeto(v)),parametros);
 
-    %Creación de comidas mixtas
+    %Creaciï¿½n de comidas mixtas
     if settings.mix
         [parametros.ra_comidas_mixtas, escenario.Tcomix, escenario.Acomix] = creacion_comidas_mixtasv3(escenario,t,char(sujeto(v)));
     else
         parametros.ra_comidas_mixtas = zeros(1,size(t,2));
     end
 
-    %Creación vector de insulina 
+    %Creaciï¿½n vector de insulina 
     if parametros.variacion.visentin
         [parametros,escenario] = creacion_bolos_visentin(parametros,escenario,t,char(sujeto(v)),settings.mix);
     else
         [parametros.insulina,escenario] = creacion_bolos(parametros,escenario,t,char(sujeto(v)),settings.mix);
     end
 
-    %Vectores de variación intra-paciente
+    %Vectores de variaciï¿½n intra-paciente
     if parametros.variacion.varsen||parametros.variacion.visentin
         [parametros] = variacion_intrapaciente_v3(parametros,t,escenario.paso);
     end
@@ -181,10 +181,10 @@ for v=1:length(sujeto)
     %Condicines iniciales del modelo T1DM
     parametros.paciente.x0 = condiciones_iniciales(parametros,escenario);
 
-    %Configuración de los parámetros del controlador
+    %Configuraciï¿½n de los parï¿½metros del controlador
     control_param;
     
-    %Creación del vector de ruido de CGM
+    %Creaciï¿½n del vector de ruido de CGM
     if settings.ruido
         parametros.ruido = creacion_CGMnoise(hardware,escenario,t);
     else
@@ -192,14 +192,16 @@ for v=1:length(sujeto)
     end
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %Simulación REEMPLAZAR
+    %Simulaciï¿½n REEMPLAZAR
+    %[glucose_plasma, CGM, u_pumped, ubasal, ubolus,IOB_est ] = bloq_simulink (parametros, hardware);
+
     cd Plataformas\
     simOut = sim(plataforma,paramNameValStruct);
     cd ..
      
       
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %Guardado de variables de salida de la simulación
+    %Guardado de variables de salida de la simulaciï¿½n
     salidas = simOut.get('salidas');
     estados = simOut.get('estados');
     ts      = simOut.get('tout');
@@ -213,10 +215,10 @@ for v=1:length(sujeto)
     
 end
 disp(['**Guardado "',settings.narchi,'"**'])
-disp('**Simulación finalizada**')
+disp('**Simulaciï¿½n finalizada**')
 disp(datetime('now'))
 
-%% --------- Gráficos y planilla de resultados
+%% --------- Grï¿½ficos y planilla de resultados
 if auto == 0
     graficos(settings.narchi);
 end
