@@ -166,7 +166,7 @@ for v=1:length(sujeto)
         parametros.ra_comidas_mixtas = zeros(1,size(t,2));
     end
 
-    %Creaci�n vector de insulina 
+    %Creacion vector de insulina 
     if parametros.variacion.visentin
         [parametros,escenario] = creacion_bolos_visentin(parametros,escenario,t,char(sujeto(v)),settings.mix);
     else
