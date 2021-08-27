@@ -192,7 +192,7 @@ for v=1:length(sujeto)
     end
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %Simulaci�n REEMPLAZAR
+    %Simulacion REEMPLAZAR
     %[glucose_plasma, CGM, u_pumped, ubasal, ubolus,IOB_est ] = bloq_simulink (parametros, hardware);
 
     cd Plataformas\
@@ -214,9 +214,9 @@ for v=1:length(sujeto)
     [data] = guardar(data,v,sujeto,parametros,salidas,estados,escenario,ts,ctrl,settings.narchi);
     
 end
-disp(['**Guardado "',settings.narchi,'"**'])
-disp('**Simulaci�n finalizada**')
-disp(datetime('now'))
+disp(['**Guardado "',settings.narchi,'"**']);
+disp('**Simulaci�n finalizada**');
+disp(datetime('now'));
 
 %% --------- Gr�ficos y planilla de resultados
 if auto == 0

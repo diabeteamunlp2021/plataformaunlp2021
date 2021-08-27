@@ -1,8 +1,8 @@
 %% ------- Inicializacion
-% clear global
-% clear
-% clc
-dir = fileparts(which('simulador_unlp'));
+clear global
+clear
+clc
+dir = fileparts(which('testSimulador'));
 cd(dir)
 addpath(genpath(cd))
 
@@ -25,15 +25,6 @@ switch auto
             'nombrebomba',{'insulet.pmp'},'nombresensor',{'dexcom50.scs'},...
             'excel',0);
         
-        % Pacientes
-        %sujeto = ({'adult#001'});
-        %***Adultos***
-        %sujeto = ({'adult#001','adult#002','adult#003','adult#004','adult#005','adult#006','adult#007','adult#008','adult#009','adult#010','adult#average'});
-        %***Pibes***
-        %sujeto = ({'child#001','child#002','child#003','child#004','child#005','child#006','child#007','child#008','child#009','child#010','child#average'});
-        %***Adolescentes***
-        %sujeto = ({'adolescent#001','adolescent#002','adolescent#003','adolescent#004','adolescent#005','adolescent#006','adolescent#007','adolescent#008','adolescent#009','adolescent#010','adolescent#average'});
-        %***Todes***
         sujeto = ({'child#001','child#002','child#003','child#004','child#005','child#006','child#007','child#008','child#009','child#010','child#average',...
             'adolescent#001','adolescent#002','adolescent#003','adolescent#004','adolescent#005','adolescent#006','adolescent#007','adolescent#008','adolescent#009','adolescent#010','adolescent#average',...
             'adult#001','adult#002','adult#003','adult#004','adult#005','adult#006','adult#007','adult#008','adult#009','adult#010','adult#average'});
@@ -41,13 +32,13 @@ switch auto
     case 0
         %Carga de los sujetos a simular
         [sujeto, bombas, sensores, s] = subj_disp_loader();    %arreglo de cadenas que contienem los sujetosy dispositivos disponibles
-        if s==0                     %en caso de cancelar la seleccion se cierra el programa
+        if s==0                     %en caso de cancelar la selecci�n se cierra el programa
             clear
             return;
         end
         
         %% ---- Ventana de carga de datos
-        [settings, boton] = settingsdlg(...                                                 %esta funcion fue desarrollada por Rody Oldenhuis
+        [settings, boton] = settingsdlg(...                                                 %esta funci�n fue desarrollada por Rody Oldenhuis
             'Description', 'Configuracion de diferentes aspectos de la simulacion',...
             'title'      , 'Simulador UNLP',...
             'separator'  , 'Configuracion',...
@@ -121,8 +112,8 @@ t                           = linspace(0,escenario.tf,escenario.tf/escenario.pas
 escenario.nombre_bomba      = char(settings.nombrebomba);           %bomba seleccionada
 escenario.nombre_sensor     = char(settings.nombresensor);          %sensor seleccionada
 
-parametros.variacion.visentin   = settings.visentin;
-parametros.variacion.varsen     = settings.varsen;
+ parametros.variacion.visentin   = settings.visentin;
+ parametros.variacion.varsen     = settings.varsen;
 
 switch settings.lazo
     case 'Lazo abierto'
@@ -152,11 +143,10 @@ parametros.iv = creacion_IV(escenario,t);
 hardware = cargar_hardware(escenario.nombre_bomba,escenario.nombre_sensor,hardware,settings.bomba,settings.sensor);
 
 %% ------ Configuracion SIMULINK y ventana de progreso
-%paramNameValStruct = config_sim();
-%h = waitbar(0,'Simulando pacientes, por favor espere...','windowstyle', 'modal');
+% paramNameValStruct = config_sim();
+% h = waitbar(0,'Simulando pacientes, por favor espere...','windowstyle', 'modal');
 
-%x0 = parametros.paciente.x0;
-item = 1;
+
 %Bucle principal de simulacion
 for v=1:length(sujeto)
     
@@ -186,27 +176,32 @@ for v=1:length(sujeto)
     parametros.paciente.x0 = condiciones_iniciales(parametros,escenario);
     
     %Configuracion de los parametros del controlador
-    control_param;
+%     control_param;
     
     %Creacion del vector de ruido de CGM
-    if settings.ruido
-        parametros.ruido = creacion_CGMnoise(hardware,escenario,t);
-    else
-        parametros.ruido = [t' zeros(size((t)'))];
-    end
+     if settings.ruido
+         parametros.ruido = creacion_CGMnoise(hardware,escenario,t);
+     else
+         parametros.ruido = [t' zeros(size((t)'))];
+     end
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Simulacion Bloque_Simulink
        
-    x0 = parametros.paciente.x0;
-    tsimu = escenario.ti:escenario.paso:escenario.tf;
+    tsimul = [escenario.deltat]*60*24;
     
-    for t=tsimu
+    ts = 0:escenario.deltat:tsimul-escenario.deltat;
+    
+    x0 = parametros.paciente.x0;
+    
+    item = 1;
+    
+    for k=1:length(ts)
         %% Bloque LA/LC
         switch settings.lazo
             case 'Lazo abierto'
-                bolus_lalc1 = parametros.insulina(1,t);
-                basal_lalc1 = parametros.insulina(2,t); %Basal LA + Bolo LA
+                bolus_lalc1 = parametros.insulina(1,k);
+                basal_lalc1 = parametros.insulina(2,k); %Basal LA + Bolo LA
             case 'Lazo cerrado'
                 bolus_lalc1 = 1;
                 basal_lalc1 = 1;
@@ -221,55 +216,33 @@ for v=1:length(sujeto)
         [ubolus_glu,ubasal_glu] = pump(ubolus,ubasal,hardware,parametros.paciente.BW);   %Glucagon
         
         %% Paciente Block
-        ubolus_ins= (1/parametros.paciente.BW)*ubolus_ins;
-        ubasal_ins = (1/parametros.paciente.BW)*ubasal_ins;
+        ubolus_ins= (1/parametros.paciente.BW).*ubolus_ins;
+        ubasal_ins = (1/parametros.paciente.BW).*ubasal_ins;
         sq_insulin = ubolus_ins + ubasal_ins;
         
-        ubolus_glu = (1/parametros.paciente.BW)*ubolus_glu;
-        ubasal_glu = (1/parametros.paciente.BW)*ubasal_glu;
+        ubolus_glu = (1/parametros.paciente.BW).*ubolus_glu;
+        ubasal_glu = (1/parametros.paciente.BW).*ubasal_glu;
         sq_glucagon = ubolus_glu + ubasal_glu;
         iv_insulin = parametros.iv(2,:);   %insulina
         iv_glucose = parametros.iv(1,:);   %glucosa 
-        mix_meals = 0; %(1/parametros.paciente.BW).*parametros.ra_comidas_mixtas; % ** 
+        mix_meals = (1/parametros.paciente.BW).*parametros.ra_comidas_mixtas;
         
-        u = [parametros.comidas(1,item) sq_insulin sq_glucagon iv_insulin(item) iv_glucose(item) mix_meals];
+        u = [parametros.comidas(k); sq_insulin; sq_glucagon(k); iv_insulin(k); iv_glucose(k); mix_meals(k)];
         
-        data(v).estados(:,item) = x0;
+        %
         
-        data(v).glucosa(item) = x0(13)/parametros.paciente.Vg;
+        [~,X] = ode45(@(k,x) t1dm_unlp_v2(k,x,u,parametros,escenario),[k k+escenario.deltat],x0);
         
-        [~,X] = ode45(@(t,x) t1dm_unlp_v2(t,x,u,parametros,escenario),[t t+escenario.paso],x0);
-                
-        x0 = X(end,:); %Next iteration   
-
+        % Guardar estados 
+        estados(item,:) = X;   
+        
+        x0 = X(end,:); %Next iteration       
+        
         item = item + 1;
         
     end %Fin Loop vector tiempo de Paciente(v)
-     
-    disp('Numero de items por paciente: ');
+    salidas;
     
-    disp(item);
-    
-    a_item = 1:item-1;
-    %[data] = guardar(data,v,sujeto,parametros,salidas,estados,escenario,ts,ctrl,settings.narchi);
+    [data] = guardar(data,v,sujeto,parametros,salidas,estados,escenario,ts,ctrl,settings.narchi);
     
 end %Fin Loop Paciente
-
-plot(a_item,data(1).glucosa);
-
-%disp(['**Guardado "',settings.narchi,'"**'])
-disp('**Simulacion finalizada**')
-disp(datetime('now'))
-
-% %% --------- Graficos y planilla de resultados
-% if auto == 0
-%     graficos(settings.narchi);
-% end
-% if settings.excel
-%     excel_maker(['resultados_' settings.narchi]);
-% end
-
-%rmpath(genpath(dir))
-
-clearvars -except data
-

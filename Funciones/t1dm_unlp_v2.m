@@ -1,9 +1,9 @@
 %function [sys,x0,str,ts] = t1dm_unlp_v2(t,x,u,parametros,escenario)
-function [sys,x0,str,ts] = t1dm_unlp_v2(t,x,u,parametros,escenario)
+function [sys,t] = t1dm_unlp_v2(t,x,u,parametros,escenario)
 
-x0  = parametros.paciente.x0;
-str = [];
-ts  = [0 0];
+%x0  = parametros.paciente.x0;
+%str = [];
+%ts  = [0 0];
 
 persistent qstoatmealtime; 
 
@@ -39,7 +39,7 @@ if dosekempt>0
     kempt = parametros.paciente.kmin+(parametros.paciente.kmax-parametros.paciente.kmin)/2*(tanh(alfa*(qsto-parametros.paciente.b*dosekempt))-tanh(beta*(qsto-parametros.paciente.d*dosekempt))+2);  
 else
     kempt = parametros.paciente.kmax;
-end;
+end
 
 %Stomach liquid
 sys(2) = parametros.paciente.kmax*x(1)-x(2)*kempt;
@@ -48,8 +48,7 @@ sys(2) = parametros.paciente.kmax*x(1)-x(2)*kempt;
 sys(3) = kempt*x(2)-parametros.paciente.kabs*x(3);
 
 %Rate of appearance
-%Rat = parametros.paciente.f*parametros.paciente.kabs*x(3)/parametros.paciente.BW+u(6);
-Rat = parametros.paciente.f*parametros.paciente.kabs*x(3)/parametros.paciente.BW+mix_meals;
+Rat = parametros.paciente.f*parametros.paciente.kabs*x(3)/parametros.paciente.BW+u(6);
 
 % GLUCOSE PRODUCTION (A5)
 EGPt = parametros.paciente.kp1-parametros.paciente.kp2*x(4)-parametros.paciente.kp3*x(9)+parametros.paciente.kcounter*x(15);
@@ -82,16 +81,14 @@ Vmt    = parametros.paciente.Vm0+parametros.paciente.Vmx*x(7)*(1+parametros.paci
 Kmt    = parametros.paciente.Km0; 
 Uidt   = Vmt*x(5)/(Kmt+x(5)); %porque no se usa registro de ejercicios
 
-% GLUCOSE KINETICS (A1)
-%sys(4) = max(EGPt,0)+Rat-Uiit-Et-parametros.paciente.k1*x(4)+parametros.paciente.k2*x(5)+u(5); %u(5)= glucosa IV
-sys(4) = max(EGPt,0)+Rat-Uiit-Et-parametros.paciente.k1*x(4)+parametros.paciente.k2*x(5)+iv_glucose;
+% GLUCOSE KINETICS (A1)  HASTA ACA
+sys(4) = max(EGPt,0)+Rat-Uiit-Et-parametros.paciente.k1*x(4)+parametros.paciente.k2*x(5)+u(5); %u(5)= glucosa IV
 sys(4) = (x(4)>=0)*sys(4);
 sys(5) = -Uidt+parametros.paciente.k1*x(4)-parametros.paciente.k2*x(5);
 sys(5) = (x(5)>=0)*sys(5);
 
 % INSULIN KINETICS (A2)
-%sys(6) = -(parametros.paciente.m2+parametros.paciente.m4)*x(6)+parametros.paciente.m1*x(10)+parametros.paciente.ka1*x(11)+parametros.paciente.ka2*x(12)+u(4); %u4=Insulina IV
-sys(6) = -(parametros.paciente.m2+parametros.paciente.m4)*x(6)+parametros.paciente.m1*x(10)+parametros.paciente.ka1*x(11)+parametros.paciente.ka2*x(12)+iv_insulin;
+sys(6) = -(parametros.paciente.m2+parametros.paciente.m4)*x(6)+parametros.paciente.m1*x(10)+parametros.paciente.ka1*x(11)+parametros.paciente.ka2*x(12)+u(3);%****
 It     = x(6)/parametros.paciente.Vi;
 sys(6) = (x(6)>=0)*sys(6);
 
@@ -107,7 +104,7 @@ sys(10) = -(parametros.paciente.m1+parametros.paciente.m30)*x(10)+parametros.pac
 sys(10) = (x(10)>=0)*sys(10);
 
 % SUBCUTANEOUS INSULIN KINETICS (A17) 
-sys(11)=u(2)-(parametros.paciente.ka1+parametros.paciente.kd)*x(11); % u2=insulina sc
+sys(11)=u(2)-(parametros.paciente.ka1+parametros.paciente.kd)*x(11); % u2=insulina sc*****
 sys(11)=(x(11)>=0)*sys(11);
 
 sys(12)=parametros.paciente.kd*x(11)-parametros.paciente.ka2*x(12);
@@ -125,12 +122,11 @@ SRht  = SRhst+SRhdt;  %(A24)
 Raht = parametros.paciente.SQgluc_k2*x(18); %(A28) mg/Kg/min
 Raht = Raht*1e6/(parametros.paciente.SQgluc_Vgcn*1e-3);  %ng/L/min (distribution volume in mL/Kg)
 
-if (escenario.endoglucagon) %Parametro agregado que anula la secreci�n
+if (escenario.endoglucagon) %Parametro agregado que anula la secrecion
     sys(14)=-parametros.paciente.k01g*x(14)+SRht+Raht;
 else
     sys(14)=-parametros.paciente.k01g*x(14)+Raht;
 end
-%sys(14)=(x(14)>=0)*sys(14);
 
 %GLUCAGON ACTION ON PRODUCTION (A8)
 sys(15) = -parametros.paciente.kXGn*x(15)+parametros.paciente.kXGn*max(x(14)-parametros.paciente.Gnb,0);
@@ -143,7 +139,6 @@ if G>=parametros.paciente.Gb
 else
     sys(16) = -parametros.paciente.alfaG*(x(16)-max((parametros.paciente.kGSRs*(parametros.paciente.Gth-x(4)/parametros.paciente.Vg))/(1+x(6)/parametros.paciente.Vi-parametros.paciente.Ith)+SRHb,0));
 end
-%sys(16)=(x(16)>=0)*sys(16);
 
 %GLUCAGON ABSORPTION KINETICS (A22)
 % Input glucagon (mg/Kg/min)
