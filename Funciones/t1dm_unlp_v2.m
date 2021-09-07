@@ -77,7 +77,7 @@ Vmt    = parametros.paciente.Vm0+parametros.paciente.Vmx*x(7)*(1+parametros.paci
 Kmt    = parametros.paciente.Km0; 
 Uidt   = Vmt*x(5)/(Kmt+x(5)); %porque no se usa registro de ejercicios
 
-% GLUCOSE KINETICS (A1)  HASTA ACA
+% GLUCOSE KINETICS (A1)  
 sys(4) = max(EGPt,0)+Rat-Uiit-Et-parametros.paciente.k1*x(4)+parametros.paciente.k2*x(5)+u(5); %u(5)= glucosa IV
 sys(4) = (x(4)>=0)*sys(4);
 sys(5) = -Uidt+parametros.paciente.k1*x(4)-parametros.paciente.k2*x(5);

@@ -26,7 +26,7 @@ switch auto
             'excel',0);
         
         % Pacientes
-        sujeto = ({'adult#001'});
+        sujeto = ({'adult#001','adolescent#001','child#001'});
         %***Adultos***
         %sujeto = ({'adult#001','adult#002','adult#003','adult#004','adult#005','adult#006','adult#007','adult#008','adult#009','adult#010','adult#average'});
         %***Pibes***
@@ -193,14 +193,21 @@ for v=1:length(sujeto)
     end
     
     %% Bloque de Simulación por cada Paciente
-    data = bloq_simulacion(data,v,item,parametros,hardware,escenario,settings);  
-
-    %[data] = guardar(data,v,sujeto,parametros,salidas,estados,escenario,ts,ctrl,settings.narchi);
+    [data] = bloq_simulacion(data,v,item,parametros,hardware,escenario,settings,ctrl);  
     
 end %Fin Loop Paciente
 
-figure
-plot(data(1).glucosa);
+if v==length(sujeto) 
+    disp('**Guardando datos**')
+    cd Sim_data  
+    save(settings.narchi,'data');
+    cd ..
+end
+
+%figure, plot(data(1).glucosa);
+if auto == 1
+    graficos(settings.narchi);
+end
 
 disp('**Simulacion finalizada**')
 disp(datetime('now'))
