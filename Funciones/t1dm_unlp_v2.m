@@ -1,10 +1,6 @@
 %function [sys,x0,str,ts] = t1dm_unlp_v2(t,x,u,parametros,escenario)
 function [sys,t] = t1dm_unlp_v2(t,x,u,parametros,escenario)
 
-%x0  = parametros.paciente.x0;
-%str = [];
-%ts  = [0 0];
-
 persistent qstoatmealtime; 
 
 %Intra-patient variability
@@ -88,7 +84,7 @@ sys(5) = -Uidt+parametros.paciente.k1*x(4)-parametros.paciente.k2*x(5);
 sys(5) = (x(5)>=0)*sys(5);
 
 % INSULIN KINETICS (A2)
-sys(6) = -(parametros.paciente.m2+parametros.paciente.m4)*x(6)+parametros.paciente.m1*x(10)+parametros.paciente.ka1*x(11)+parametros.paciente.ka2*x(12)+u(3);%****
+sys(6) = -(parametros.paciente.m2+parametros.paciente.m4)*x(6)+parametros.paciente.m1*x(10)+parametros.paciente.ka1*x(11)+parametros.paciente.ka2*x(12)+u(4);%****
 It     = x(6)/parametros.paciente.Vi;
 sys(6) = (x(6)>=0)*sys(6);
 

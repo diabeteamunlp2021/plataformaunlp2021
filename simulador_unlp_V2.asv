@@ -192,16 +192,16 @@ for v=1:length(sujeto)
         parametros.ruido = [t' zeros(size((t)'))];
     end
     
-    %% Bloque de Simulación por cada Paciente
+    %Bloque de Simulación por cada Paciente
     data = bloq_simulacion(data,v,item,parametros,hardware,escenario,settings);  
 
     %[data] = guardar(data,v,sujeto,parametros,salidas,estados,escenario,ts,ctrl,settings.narchi);
     
 end %Fin Loop Paciente
-
 figure
 plot(data(1).glucosa);
 
+%disp(['**Guardado "',settings.narchi,'"**'])
 disp('**Simulacion finalizada**')
 disp(datetime('now'))
 
