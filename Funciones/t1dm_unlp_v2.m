@@ -1,4 +1,3 @@
-%function [sys,x0,str,ts] = t1dm_unlp_v2(t,x,u,parametros,escenario)
 function [sys,t] = t1dm_unlp_v2(t,x,u,parametros,escenario)
 
 persistent qstoatmealtime; 
@@ -99,7 +98,7 @@ sys(9) = -parametros.paciente.ki*(x(9)-x(8));
 sys(10) = -(parametros.paciente.m1+parametros.paciente.m30)*x(10)+parametros.paciente.m2*x(6);
 sys(10) = (x(10)>=0)*sys(10);
 
-% SUBCUTANEOUS INSULIN KINETICS (A17) 
+% SUBCUTANEOUS INSULIN KINETICS (A17) --> IOB
 sys(11)=u(2)-(parametros.paciente.ka1+parametros.paciente.kd)*x(11); % u2=insulina sc*****
 sys(11)=(x(11)>=0)*sys(11);
 

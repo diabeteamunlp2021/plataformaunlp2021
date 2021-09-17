@@ -1,7 +1,7 @@
 function [ubolus_pumped,ubasal_pumped]  = pump(ubolus,ubasal,hardware,BW)
     % pump saturation, quantization and random error
     % adapted from UVa simulator v32
-    % BW peso del paciente Body Weith
+   
     % ubasal and ubolus in pmol/Kg/min (or equivalent units for glucagon)
 %     ubolus = ubolus*hardware.correction_for_infusate;
 %     ubasal = ubasal*hardware.correction_for_infusate;

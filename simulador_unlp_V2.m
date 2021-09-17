@@ -1,8 +1,8 @@
 %% ------- Inicializacion
-% clear global
-% clear
-% clc
-dir = fileparts(which('simulador_unlp'));
+clear global
+clear
+clc
+dir = fileparts(which('simulador_unlp')); % hay diferencia si tiene el V2 o no? 
 cd(dir)
 addpath(genpath(cd))
 
@@ -14,10 +14,11 @@ plataforma = 'plataforma_unlp';
 auto = 1; % para usar interfaz grafica o no
 switch auto
     case 1
-        % Configuracion de simulacion
+        % Configuracion de simulacion -> ti=0, modifico según la hora de
+        % inicio que quiera
         settings = struct(...
             'escenario',{'prueba'},...
-            'paso',1,'ti',0,'tf',24,...
+            'paso',1,'ti',6,'tf',24,...
             'narchi',{'sim'},...
             'varsen',0,'visentin',0,'mix',0,...
             'lazo',{'Lazo abierto'},...
@@ -26,7 +27,7 @@ switch auto
             'excel',0);
         
         % Pacientes
-        sujeto = ({'adult#001','adolescent#001','child#001'});
+        sujeto = ({'adolescent#001','adult#001','child#001'});
         %***Adultos***
         %sujeto = ({'adult#001','adult#002','adult#003','adult#004','adult#005','adult#006','adult#007','adult#008','adult#009','adult#010','adult#average'});
         %***Pibes***
@@ -115,8 +116,7 @@ end
 escenario.ti                = settings.ti*60;             %tiempo de inicio de la simulacion en minutos a partir de las 0hs
 escenario.tf                = settings.tf*60;             %duracion de la simulacion
 escenario.paso              = settings.paso;              %paso de simulacion en minutos
-
-% vector de tiempo de simulacion
+ 
 t                           = linspace(0,escenario.tf,escenario.tf/escenario.paso+1);  %creacion del vector de tiempo de simulacion
 escenario.nombre_bomba      = char(settings.nombrebomba);           %bomba seleccionada
 escenario.nombre_sensor     = char(settings.nombresensor);          %sensor seleccionada
@@ -204,7 +204,6 @@ if v==length(sujeto)
     cd ..
 end
 
-%figure, plot(data(1).glucosa);
 if auto == 1
     graficos(settings.narchi);
 end
