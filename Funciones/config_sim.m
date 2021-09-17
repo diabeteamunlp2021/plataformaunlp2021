@@ -22,7 +22,8 @@ parametros_simu.StopTime       = 'escenario.tf';
 parametros_simu.SaveTime       = 'on';
 parametros_simu.TimeSaveName   = 'tout';
 parametros_simu.SolverType     = 'Fixed-step';
-parametros_simu.Solver         = 'ode1';    %Select the solver you want to use to compute the states of the model during simulation or code generation.
+parametros_simu.Solver         = 'ode4';    %Select the solver you want to use to compute the states of the model during simulation or code generation.
+%Inicialmente Solver=Ode1
 parametros_simu.Fixedstep      = 'escenario.paso';
 parametros_simu.LimitDataPoints = 'off';
 

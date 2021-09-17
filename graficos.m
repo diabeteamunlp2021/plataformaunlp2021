@@ -94,7 +94,7 @@ for i=s
     elseif (settings.gp||settings.gi||settings.sensor)
         figure('Name','Glucosa')
         if settings.gp
-            plot(data(i).t/60,data(i).glucosa,'r','DisplayName','Glucosa plasma') 
+            plot(data(i).t/60,data(i).glucosa,'r','DisplayName','Glucosa plasma')
             legend('-DynamicLegend');
             hold all
         end
