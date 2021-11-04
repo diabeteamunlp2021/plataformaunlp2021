@@ -2,7 +2,7 @@
 clear global
 clear
 clc
-dir = fileparts(which('simulador_unlp')); % hay diferencia si tiene el V2 o no? 
+dir = fileparts(which('simulador_unlp')); 
 cd(dir)
 addpath(genpath(cd))
 
@@ -18,7 +18,7 @@ switch auto
         % inicio que quiera
         settings = struct(...
             'escenario',{'prueba'},...
-            'paso',1,'ti',6,'tf',24,...
+            'paso',1,'ti',0,'tf',30,...
             'narchi',{'sim'},...
             'varsen',0,'visentin',0,'mix',0,...
             'lazo',{'Lazo abierto'},...
@@ -27,7 +27,7 @@ switch auto
             'excel',0);
         
         % Pacientes
-        sujeto = ({'adolescent#001','adult#001','child#001'});
+        sujeto = ({'adult#001','adolescent#001','child#001'});
         %***Adultos***
         %sujeto = ({'adult#001','adult#002','adult#003','adult#004','adult#005','adult#006','adult#007','adult#008','adult#009','adult#010','adult#average'});
         %***Pibes***
@@ -77,7 +77,7 @@ switch auto
             {'Nombre del archivo de guardado';'narchi'},'sim',...
             {'Archivo Excel?';'excel'},false);
         
-        if ~strcmp(boton,'OK')              %en caso de cancelar se sale del programa
+        if ~strcmp(boton,'OK')   %en caso de cancelar se sale del programa
             clear
             return;
         end
@@ -156,7 +156,7 @@ hardware = cargar_hardware(escenario.nombre_bomba,escenario.nombre_sensor,hardwa
 item = 1;
 
 for v=1:length(sujeto)
-    
+    %item=1;
     %Carga de parametros de sujeto
     parametros = cargar_sujeto(char(sujeto(v)),parametros);
     
@@ -205,9 +205,18 @@ if v==length(sujeto)
 end
 
 if auto == 1
-    graficos(settings.narchi);
+     graficos(settings.narchi);
 end
 
+%% Graficos Tasks
+%opcion = 2; %Indica que grafico desea realizar
+%El segundo parametro indica el sujeto: 1-adult1, 2-adolescent1,3-child1
+%graf_tasks(opcion, 1, data);
+%graf_tasks(3, 1, data);
+%graf_tasks(opcion, 2, data);
+%graf_tasks(opcion, 3, data);
+
+%% Fin
 disp('**Simulacion finalizada**')
 disp(datetime('now'))
 
