@@ -2,8 +2,8 @@
 % bloq_simulacion
 %
 %   @Description:
-%               Funcion encargada de calcular los parametros de entrada 
-%               en la simulación principal.
+%               Funcion encargada de calcular los parametros de entrada,  
+%               salida y estados en la simulación principal. 
 %
 %   @param:     -data:          struct(string,array)
 %               -v:             number
@@ -20,8 +20,6 @@ function [data] = bloq_simulacion(data,v,item,parametros,hardware,escenario,sett
 
 x0 = parametros.paciente.x0;
 tsimu = escenario.ti:escenario.paso:escenario.tf;
-hardware.pump_char = 0;
-
 mix_meals = (1/parametros.paciente.BW).*parametros.ra_comidas_mixtas; % **
 
 for t=tsimu
@@ -40,8 +38,8 @@ for t=tsimu
     end
     bolus_input2 = 0;
     basal_input2 = 0;
-    ubolus = bolus_input1 + bolus_input2;
-    ubasal = basal_input1 + basal_input2;
+    ubolus = bolus_input1 + bolus_input2;   %pmol/kg
+    ubasal = basal_input1 + basal_input2;   %pmol/kg
     
     %% Pump Block
     [ubolus_ins,ubasal_ins]  = pump_v2(ubolus,ubasal,hardware,settings.bomba,parametros.paciente.BW); %Insulina
@@ -50,20 +48,19 @@ for t=tsimu
     
     %% Patient Block
     sq_insulin = ubolus_ins + ubasal_ins;
-    sq_glucagon = 0; %siempre en 0 para Lazo Abierto
+    sq_glucagon = 0;    %Siempre en 0 para Lazo Abierto
     
     meal = parametros.comidas(1,(t/escenario.paso)+1);
     iv2 = parametros.iv(2,(t/escenario.paso)+1);
     iv1 = parametros.iv(1,(t/escenario.paso)+1);
     mix_meal = mix_meals((t/escenario.paso)+1);
     
-    %u = [parametros.comidas(1,t) sq_insulin sq_glucagon parametros.iv(2,t) parametros.iv(1,t) mix_meals(t)];
     u = [meal sq_insulin sq_glucagon iv2 iv1 mix_meal];
-    
+    -
     % Se guardan los estados
     estados(:,item) = x0;
     
-    gluc_p = x0(4)/parametros.paciente.Vg; %% x0(4) = x0(13) ?
+    gluc_p = x0(4)/parametros.paciente.Vg; 
     
     IOB_est = x0(11)+x0(12);    %IOB estimada
     

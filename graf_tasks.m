@@ -18,12 +18,12 @@ switch opcion
         grid on
         subplot(3,1,2)
         plot(data(nro).t/60,data(nro).salidas(5,:)/6000)
-        ylabel('Bolos [U/min]');%ylim([0 (max(data(nro).salidas(:,5)/6000)+1)]),
+        ylabel('Bolos [U/min]')
         xlim([data(nro).t(1)/60 data(nro).t(end)/60]);xlabel('tiempo [horas]');
         grid on
         subplot(3,1,3)
         plot(data(nro).t/60,data(nro).salidas(4,:)/100)
-        ylabel('Ins. Basal [U/h]');%ylim([0 (max(data(nro).salidas(:,4)/100)+1)]),
+        ylabel('Ins. Basal [U/h]');
         xlim([data(nro).t(1)/60 data(nro).t(end)/60]);xlabel('tiempo [horas]');
         grid on
         

@@ -13,16 +13,14 @@ plataforma = 'plataforma_unlp';
 
 auto = 1; % para usar interfaz grafica o no
 switch auto
-    case 1
-        % Configuracion de simulacion -> ti=0, modifico según la hora de
-        % inicio que quiera
+    case 1 % Auto=1, sin interfaz grafica
         settings = struct(...
             'escenario',{'prueba'},...
             'paso',1,'ti',0,'tf',30,...
             'narchi',{'sim'},...
             'varsen',0,'visentin',0,'mix',0,...
             'lazo',{'Lazo abierto'},...
-            'bomba',0,'sensor',0,'ruido',0,...
+            'bomba',1,'sensor',0,'ruido',0,...
             'nombrebomba',{'insulet.pmp'},'nombresensor',{'dexcom50.scs'},...
             'excel',0);
         
@@ -204,14 +202,14 @@ if v==length(sujeto)
     cd ..
 end
 
-if auto == 1
-     graficos(settings.narchi);
-end
+%if auto == 1
+%     graficos(settings.narchi);
+%end
 
 %% Graficos Tasks
-%opcion = 2; %Indica que grafico desea realizar
+opcion = 2; %Indica que grafico desea realizar
 %El segundo parametro indica el sujeto: 1-adult1, 2-adolescent1,3-child1
-%graf_tasks(opcion, 1, data);
+graf_tasks(opcion, 1, data);
 %graf_tasks(3, 1, data);
 %graf_tasks(opcion, 2, data);
 %graf_tasks(opcion, 3, data);

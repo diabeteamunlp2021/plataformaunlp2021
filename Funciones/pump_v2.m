@@ -8,16 +8,18 @@ function [ubolus_pumped,ubasal_pumped]  = pump_v2(ubolus,ubasal,hardware,pump_fl
     if (pump_flag)
         %ubolus_pmolmin = ubolus*BW;         % pmol/min
         %ubasal_pmolmin = ubasal*BW;         % pmol/min
-        ubolus_pmolmin = ubolus;         % pmol/min
-        ubasal_pmolmin = ubasal; 
+        ubolus_pmolmin = ubolus;        % pmol/kg
+        ubasal_pmolmin = ubasal*hardware.pump_sampling;        % pmol/kg
         % saturate
-        ubolus_sat = min(max(hardware.pump_bolus_min*6000,ubolus_pmolmin),hardware.pump_bolus_max*6000);
-        ubasal_sat = min(max(hardware.pump_basal_min*100,ubasal_pmolmin),hardware.pump_basal_max*100);
+        ubolus_sat = min(max(hardware.pump_bolus_min,ubolus_pmolmin),hardware.pump_bolus_max);
+        ubasal_sat = min(max(hardware.pump_basal_min,ubasal_pmolmin),hardware.pump_basal_max);
         % quantize
-        qbolus          = hardware.pump_bolus_inc*6000;
-        ubolus_sat_quan = qbolus*floor(ubolus_sat/qbolus);
-        qbasal          = hardware.pump_basal_inc*100;
-        ubasal_sat_quan = qbasal*floor(ubasal_sat/qbasal);
+        qbolus          = hardware.pump_bolus_inc;
+        ubolus_sat_quan = qbolus*(ubolus_sat/qbolus); %
+        qbasal          = hardware.pump_basal_inc;
+        ubasal_sat_quan = qbasal*(ubasal_sat/qbasal); %
+
+        
 %       if (hardware.pump_noise)
             % add random error
             % TO BE IMPLEMENTED

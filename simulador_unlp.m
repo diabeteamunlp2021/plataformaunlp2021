@@ -210,7 +210,7 @@ for v=1:length(sujeto)
         close(h);
     end
     
-    [data] = guardar2(data,v,sujeto,parametros,salidas,estados,escenario,ts,ctrl,settings.narchi);
+    [data] = guardar(data,v,sujeto,parametros,salidas,estados,escenario,ts,ctrl,settings.narchi);
     
 end %Fin bucle de pacientes
 disp(['**Guardado "',settings.narchi,'"**']);
